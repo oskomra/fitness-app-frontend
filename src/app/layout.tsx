@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import AuthProvider from "@/providers/auth-provider";
 import "./globals.css";
-import NavBar from "@/components/nav-bar";
+import SideBar from "@/components/side-bar";
 
 export default function RootLayout({
   children,
@@ -18,8 +18,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NavBar />
-            {children}
+            <div className="flex h-screen">
+              <SideBar />
+              <main className="flex-1 overflow-auto">
+                {children}
+              </main>
+            </div>
           </ThemeProvider>
         </AuthProvider>
       </body>
