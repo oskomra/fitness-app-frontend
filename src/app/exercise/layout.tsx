@@ -1,4 +1,4 @@
-import ExerciseLibrary from "@/components/exercise-library";
+import ExerciseLibrary from "@/components/exercise/exercise-library";
 
 export default function ExerciseLayout({
   children,

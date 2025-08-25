@@ -1,8 +1,8 @@
-import { type Muscle } from "@/types/types";
+import { type TargetMuscle } from "@/types/types";
 import { useEffect, useState } from "react";
 
 export default function useFetchMuscles() {
-  const [muscles, setMuscles] = useState<Muscle[]>([]);
+  const [muscles, setMuscles] = useState<TargetMuscle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

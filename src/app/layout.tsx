@@ -1,7 +1,9 @@
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import AuthProvider from "@/providers/auth-provider";
 import "./globals.css";
 import SideBar from "@/components/side-bar";
+import store from "@/store/store";
+import ReduxProvider from "@/providers/redux-provider";
 
 export default function RootLayout({
   children,
@@ -18,12 +20,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex h-screen">
-              <SideBar />
-              <main className="flex-1 overflow-auto">
-                {children}
-              </main>
-            </div>
+            <ReduxProvider>
+              <div className="flex h-screen">
+                <SideBar />
+                <main className="flex-1 overflow-auto">{children}</main>
+              </div>
+            </ReduxProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
