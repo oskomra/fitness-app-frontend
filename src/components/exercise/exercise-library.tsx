@@ -5,7 +5,6 @@ import getEquipments from "@/lib/getEquipments";
 import getTargetMuscles from "@/lib/getTargetMuscles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ExerciseStoreInitializer from "./exercise-store-initializer";
-import { Spinner, type SpinnerProps } from "@/components/ui/shadcn-io/spinner";
 
 export default async function ExerciseLibrary() {
   const exercises = await getExercises();

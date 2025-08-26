@@ -22,7 +22,7 @@ export default function AllExercises() {
   };
 
   return (
-    <ScrollArea className="h-128 w-full mt-4 border-t-2">
+    <ScrollArea className="h-72 md:h-128 w-full mt-4 border-t-2">
       <Label className="p-2 font-semibold dark:text-neutral-400 text-xl">
         All Exercises
       </Label>

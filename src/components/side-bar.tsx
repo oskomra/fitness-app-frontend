@@ -10,9 +10,28 @@ import {
   faGear,
   faGrip,
 } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "./ui/shadcn-io/spinner";
+import { useState, useEffect } from "react";
 
 export default function SideBar() {
   const { user, logout } = useAuth();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className="flex flex-row h-20 w-full justify-center items-center md:flex-col md:w-64 md:h-screen md:justify-center md:items-center gap-2 p-4 ring-2 ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700 flex-shrink-0">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-row h-20 w-full justify-center items-center md:flex-col md:w-64 md:h-screen md:justify-start md:items-start gap-2 p-4 ring-2 ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700 flex-shrink-0">
