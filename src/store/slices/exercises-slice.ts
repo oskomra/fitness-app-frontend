@@ -17,6 +17,17 @@ const exercisesSlice = createSlice({
       state.filteredExercises = action.payload;
       state.isInitialized = true;
     },
+    filterExercises: (state, action) => {
+      const query = action.payload.toLowerCase();
+
+      if (query === "") {
+        state.filteredExercises = state.exercises;
+      } else {
+        state.filteredExercises = state.exercises.filter((exercise) =>
+          exercise.name.toLowerCase().includes(query)
+        );
+      }
+    },
   },
 });
 

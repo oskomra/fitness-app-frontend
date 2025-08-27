@@ -5,6 +5,7 @@ import getEquipments from "@/lib/getEquipments";
 import getTargetMuscles from "@/lib/getTargetMuscles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ExerciseStoreInitializer from "./exercise-store-initializer";
+import ExerciseSearch from "./exercise-search";
 
 export default async function ExerciseLibrary() {
   const exercises = await getExercises();
@@ -25,6 +26,9 @@ export default async function ExerciseLibrary() {
                 targetMuscles={targetMuscles}
                 equipments={equipments}
               />
+            </div>
+            <div className="mr-4 ml-4">
+              <ExerciseSearch />
             </div>
             <AllExercises />
           </div>
