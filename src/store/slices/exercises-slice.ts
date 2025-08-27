@@ -23,7 +23,7 @@ const exercisesSlice = createSlice({
       if (query === "") {
         state.filteredExercises = state.exercises;
       } else {
-        state.filteredExercises = state.exercises.filter((exercise) =>
+        state.filteredExercises = state.filteredExercises.filter((exercise) =>
           exercise.name.toLowerCase().includes(query)
         );
       }
