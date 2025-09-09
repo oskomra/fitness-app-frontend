@@ -47,9 +47,9 @@ export default function SideBar() {
         <span className="hidden md:inline">Profile</span>
       </Link>
 
-      <Link href="/workouts" className="rounded-sm p-2 md:w-full">
+      <Link href="/workout" className="rounded-sm p-2 md:w-full">
         <FontAwesomeIcon className="md:mr-2" icon={faDumbbell} />
-        <span className="hidden md:inline">Workouts</span>
+        <span className="hidden md:inline">Workout</span>
       </Link>
 
       <Link href="/exercise" className="rounded-sm p-2 md:w-full">

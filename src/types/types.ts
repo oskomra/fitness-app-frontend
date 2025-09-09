@@ -25,3 +25,28 @@ export type Exercise = {
   targetMuscles: TargetMuscle[];
   equipments: Equipment[];
 };
+
+export type WorkoutExerciseSet = {
+  id: number;
+  setNumber: number;
+  reps: number;
+  weight: number;
+  workoutExerciseId: number;
+};
+
+export type WorkoutExercise = {
+  id: number;
+  sets: WorkoutExerciseSet[];
+  workoutId: number;
+  exerciseId: string;
+};
+
+export type Workout = {
+  id: number;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string | null;
+  userId: number;
+  exercises: WorkoutExercise[];
+};

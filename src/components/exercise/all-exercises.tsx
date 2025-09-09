@@ -4,7 +4,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Label } from "../ui/label";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { Spinner } from "../ui/shadcn-io/spinner";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function AllExercises() {
   const filteredExercises = useAppSelector(
@@ -15,10 +15,28 @@ export default function AllExercises() {
   );
 
   const router = useRouter();
+  const pathname = usePathname();
   const isLoading = !isInitialized;
 
-  const handleExerciseClick = (exerciseId: string) => {
-    router.push(`/exercise/${exerciseId}`);
+  const handleExerciseClick = async (exerciseId: string) => {
+    if (pathname.startsWith("/exercise")) {
+      router.push(`/exercise/${exerciseId}`);
+    } else if (pathname.startsWith("/workout")) {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/workout-exercises/${exerciseId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+      } catch (error) {
+        console.error("Error fetching exercise:", error);
+      }
+    }
   };
 
   return (
