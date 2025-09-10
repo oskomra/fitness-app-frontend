@@ -1,7 +1,12 @@
+"use client";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { Card, CardContent } from "../ui/card";
-import { type Workout } from "@/types/types";
+import WorkoutExerciseItem from "./workout-exercise-item";
+import { useRouter } from "next/navigation";
 
-export default function WorkoutItem({ workout }: { workout: Workout | null }) {
+export default function WorkoutItem() {
+  const workout = useAppSelector((state) => state.workout.workout);
+  const router = useRouter();
   if (!workout) return null;
 
   return (
@@ -13,11 +18,14 @@ export default function WorkoutItem({ workout }: { workout: Workout | null }) {
       ) : (
         <Card className="flex flex-col items-center w-full mt-4">
           <CardContent>
-            <h3>{workout.startDate}</h3>
-            {workout.exercises.map((exercise) => (
-              <div key={exercise.exerciseId} className="mb-4">
-                <h4 className="text-lg font-semibold">{exercise.exerciseId}</h4>
-              </div>
+            {workout?.exercises?.map((exercise) => (
+              <WorkoutExerciseItem
+                key={exercise.exerciseId}
+                exerciseId={exercise.exerciseId}
+                onClick={() => {
+                  router.push(`/exercise/${exercise.exerciseId}`);
+                }}
+              />
             ))}
           </CardContent>
         </Card>

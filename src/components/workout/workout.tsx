@@ -1,14 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import WorkoutItem from "./workout-item";
 import { type Workout } from "@/types/types";
-import { set } from "lodash";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import useFetchActiveWorkout from "@/hooks/useFetchActiveWorkout";
+import { Spinner } from "../ui/shadcn-io/spinner";
 
 export default function Workout() {
-  const [isActive, setIsActive] = useState(false);
-  const [workoutData, setWorkoutData] = useState<Workout | null>(null);
+  const dispatch = useAppDispatch();
+  const { loading } = useFetchActiveWorkout();
+  const isActive = useAppSelector((state) => state.workout.isActive);
+  const workout = useAppSelector((state) => state.workout.workout);
 
   const handleStartWorkout = async () => {
     try {
@@ -24,8 +28,7 @@ export default function Workout() {
       );
       if (response.ok) {
         const data = await response.json();
-        setIsActive(true);
-        setWorkoutData(data);
+        dispatch({ type: "workout/setWorkout", payload: data });
       }
     } catch (error) {
       console.error("Error starting workout:", error);
@@ -45,22 +48,26 @@ export default function Workout() {
         }
       );
       if (response.ok) {
-        const data = await response.json();
-        setIsActive(false);
-        setWorkoutData(null);
+        dispatch({ type: "workout/clearWorkout" });
       }
     } catch (error) {
       console.error("Error ending workout:", error);
     }
   };
 
-  return (
+  return loading ? (
+    <Card className="flex flex-col w-full">
+      <CardContent className="flex flex-1 items-center justify-center">
+        <Spinner />
+      </CardContent>
+    </Card>
+  ) : (
     <>
       <Card className="flex flex-col w-full">
         <CardContent className="flex flex-1 items-center justify-center">
           {isActive ? (
             <div className="flex flex-row items-center gap-4">
-              <span>{workoutData?.startDate}</span>
+              <span>{workout?.startDate}</span>
               <Button onClick={handleEndWorkout}>End Workout</Button>
             </div>
           ) : (
@@ -68,7 +75,7 @@ export default function Workout() {
           )}
         </CardContent>
       </Card>
-      <WorkoutItem workout={workoutData} />
+      <WorkoutItem />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import ExerciseLibrary from "@/components/exercise/exercise-library";
 
-export default function ExerciseLayout({
+export default function LibraryLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -5,6 +5,7 @@ import { Label } from "../ui/label";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { Spinner } from "../ui/shadcn-io/spinner";
 import { useRouter, usePathname } from "next/navigation";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 export default function AllExercises() {
   const filteredExercises = useAppSelector(
@@ -14,6 +15,7 @@ export default function AllExercises() {
     (state) => state.exercises.isInitialized
   );
 
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const isLoading = !isInitialized;
@@ -33,6 +35,10 @@ export default function AllExercises() {
             credentials: "include",
           }
         );
+        if (response.ok) {
+          const data = await response.json();
+          dispatch({ type: "workout/setWorkoutExercise", payload: data });
+        }
       } catch (error) {
         console.error("Error fetching exercise:", error);
       }
