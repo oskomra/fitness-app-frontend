@@ -22,6 +22,7 @@ export default function WorkoutItem() {
               <WorkoutExerciseItem
                 key={exercise.exerciseId}
                 exerciseId={exercise.exerciseId}
+                workoutExercise={exercise}
                 onClick={() => {
                   router.push(`/exercise/${exercise.exerciseId}`);
                 }}
