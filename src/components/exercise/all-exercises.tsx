@@ -37,7 +37,7 @@ export default function AllExercises() {
         );
         if (response.ok) {
           const data = await response.json();
-          dispatch({ type: "workout/setWorkoutExercise", payload: data });
+          dispatch({ type: "workout/addWorkoutExercise", payload: data });
         }
       } catch (error) {
         console.error("Error fetching exercise:", error);
