@@ -1,3 +1,12 @@
+export type User = {
+  id: number;
+  email: string;
+  name: string;
+  lastName: string;
+  phoneNumber: string;
+  authority: string;
+};
+
 export type TargetMuscle = {
   id: number;
   name: string;
@@ -47,6 +56,6 @@ export type Workout = {
   description: string;
   startDate: string;
   endDate: string | null;
-  userId: number;
+  user: User;
   exercises: WorkoutExercise[];
 };

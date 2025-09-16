@@ -51,9 +51,9 @@ export function LoginForm() {
       });
 
       if (response.ok) {
-        const user = await response.json();
+        const data = await response.json();
         if (login) {
-          login(user);
+          login(data.user);
           router.push("/");
         }
       }

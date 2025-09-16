@@ -7,9 +7,9 @@ import {
 import ExerciseDetails from "@/components/exercise/exercise-details";
 
 type ExerciseProps = {
-  params: Promise<{
+  params: {
     exerciseId: string;
-  }>;
+  };
 };
 
 type ExerciseDetails = {
@@ -24,7 +24,7 @@ type ExerciseDetails = {
 };
 
 export default async function Exercise({ params }: ExerciseProps) {
-  const { exerciseId } = await params;
+  const { exerciseId } = params;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/exercises/${exerciseId}`
   );

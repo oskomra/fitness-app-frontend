@@ -1,4 +1,4 @@
-import { useGifPreview } from "@/hooks/useGifPreview";
+import ExerciseImage from "./exercise-image";
 import { type Exercise } from "@/types/types";
 
 type ExerciseItemProps = {
@@ -7,17 +7,14 @@ type ExerciseItemProps = {
 };
 
 export default function ExerciseItem({ exercise, onClick }: ExerciseItemProps) {
-  const preview = useGifPreview(exercise.gifUrl, exercise.exerciseId);
-
   return (
     <div
       className="flex flex-row items-center gap-2 p-2 cursor-pointer hoverable rounded-md"
       onClick={onClick}
     >
-      <img
-        src={preview || exercise.gifUrl}
-        alt={exercise.name}
-        className="w-12 h-12 rounded-full object-cover"
+      <ExerciseImage
+        gifUrl={exercise.gifUrl}
+        exerciseId={exercise.exerciseId}
       />
       <div className="flex flex-col">
         <h3 className="text-sm">{exercise.name}</h3>

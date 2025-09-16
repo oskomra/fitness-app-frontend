@@ -1,7 +1,7 @@
 import { WorkoutExerciseSet } from "@/types/types";
 import { Input } from "@/components/ui/input";
 import { useState, useRef } from "react";
-import { faMaximize, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type WorkoutExerciseSetItemProps = {
@@ -21,12 +21,24 @@ export default function WorkoutExerciseSetItem({
     weight: workoutExerciseSet.weight,
     reps: workoutExerciseSet.reps,
   });
+  const [weightError, setWeightError] = useState<string | null>(null);
+  const [repsError, setRepsError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === "weight" && isNaN(Number(value))) {
+      setWeightError("Please enter a valid number");
+      return;
+    } else if (name === "reps" && isNaN(Number(value))) {
+      setRepsError("Please enter a valid number");
+      return;
+    } else {
+      setWeightError(null);
+      setRepsError(null);
+    }
     setExerciseSetUpdate((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: Number(value),
     }));
   };
 
@@ -56,33 +68,37 @@ export default function WorkoutExerciseSetItem({
   };
 
   return (
-    <div className="flex flex-row items-center justify-between w-full">
-      <div className="flex flex-row justify-between w-full px-4 py-2">
-        <div className="w-12 h-8 text-center rounded-md border border-neutral-500 flex items-center justify-center">
-          {workoutExerciseSet.setNumber}
+    <div className="flex flex-col items-center w-full mb-2 ">
+      <div className="flex flex-row items-center justify-between w-full">
+        <div className="flex flex-row justify-between w-full px-4 py-2">
+          <div className="w-12 h-8 text-center rounded-md border border-neutral-500 flex items-center justify-center">
+            {workoutExerciseSet.setNumber}
+          </div>
+          <Input
+            className="w-12 h-8 text-center"
+            name="weight"
+            value={exerciseSetUpdate.weight}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <Input
+            className="w-12 h-8 text-center"
+            name="reps"
+            value={exerciseSetUpdate.reps}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
         </div>
-        <Input
-          className="w-12 h-8 text-center"
-          name="weight"
-          value={exerciseSetUpdate.weight}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <Input
-          className="w-12 h-8 text-center"
-          name="reps"
-          value={exerciseSetUpdate.reps}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+        <div className="flex flex-row justify-end ">
+          <FontAwesomeIcon
+            icon={faXmark}
+            onClick={onRemove}
+            className="cursor-pointer text-red-500 hover:text-red-700"
+          />
+        </div>
       </div>
-      <div className="flex flex-row justify-end ">
-        <FontAwesomeIcon
-          icon={faXmark}
-          onClick={onRemove}
-          className="cursor-pointer text-red-500 hover:text-red-700"
-        />
-      </div>
+      {weightError && <div className="text-red-500 text-sm">{weightError}</div>}
+      {repsError && <div className="text-red-500 text-sm">{repsError}</div>}
     </div>
   );
 }

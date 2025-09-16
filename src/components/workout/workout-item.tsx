@@ -3,6 +3,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { Card, CardContent } from "../ui/card";
 import WorkoutExerciseItem from "./workout-exercise-item";
+import WorkoutNameEditor from "./workout-name-editor";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutItem() {
@@ -34,26 +35,32 @@ export default function WorkoutItem() {
 
   return (
     <>
-      {workout.exercises.length === 0 ? (
+      {workout.exercises?.length === 0 ? (
         <Card className="flex flex-col items-center w-full mt-4">
           <CardContent>Add exercises to this workout.</CardContent>
         </Card>
       ) : (
-        <Card className="flex flex-col items-center w-full mt-4">
-          <CardContent>
-            {workout.exercises.map((exercise) => (
-              <WorkoutExerciseItem
-                key={exercise.exerciseId}
-                exerciseId={exercise.exerciseId}
-                workoutExercise={exercise}
-                onClick={() => {
-                  router.push(`/exercise/${exercise.exerciseId}`);
-                }}
-                onRemove={() => handleRemoveWorkoutExercise(exercise.id)}
-              />
-            ))}
-          </CardContent>
-        </Card>
+        <>
+          <WorkoutNameEditor
+            title={workout.title}
+            description={workout.description}
+          />
+          <Card className="flex flex-col items-center w-full mt-4">
+            <CardContent>
+              {workout.exercises?.map((exercise) => (
+                <WorkoutExerciseItem
+                  key={exercise.exerciseId}
+                  exerciseId={exercise.exerciseId}
+                  workoutExercise={exercise}
+                  onClick={() => {
+                    router.push(`/exercise/${exercise.exerciseId}`);
+                  }}
+                  onRemove={() => handleRemoveWorkoutExercise(exercise.id)}
+                />
+              ))}
+            </CardContent>
+          </Card>
+        </>
       )}
     </>
   );

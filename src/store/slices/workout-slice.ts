@@ -40,9 +40,15 @@ const workoutSlice = createSlice({
       if (!state.workout || !state.workout.exercises) return;
       state.workout.exercises = state.workout.exercises.map((exercise) => {
         if (exercise.sets.some((set) => set.id === action.payload)) {
+          const filteredSets = exercise.sets.filter(
+            (set) => set.id !== action.payload
+          );
           return {
             ...exercise,
-            sets: exercise.sets.filter((set) => set.id !== action.payload),
+            sets: filteredSets.map((set, index) => ({
+              ...set,
+              setNumber: index + 1,
+            })),
           };
         }
         return exercise;

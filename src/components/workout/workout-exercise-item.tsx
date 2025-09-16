@@ -1,5 +1,4 @@
 "use client";
-import { useGifPreview } from "@/hooks/useGifPreview";
 import useFetchExercise from "@/hooks/useFetchExercise";
 import WorkoutExerciseSetItem from "./workout-exercise-set-item";
 import { type WorkoutExercise } from "@/types/types";
@@ -7,6 +6,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { Button } from "@/components/ui/button";
+import ExerciseImage from "../exercise/exercise-image";
 
 type WorkoutExerciseItemProps = {
   exerciseId: string;
@@ -22,7 +22,6 @@ export default function WorkoutExerciseItem({
   workoutExercise,
 }: WorkoutExerciseItemProps) {
   const { exercise } = useFetchExercise({ exerciseId });
-  const preview = useGifPreview(exercise?.gifUrl, exerciseId);
   const dispatch = useAppDispatch();
 
   const handleAddSet = async () => {
@@ -75,14 +74,13 @@ export default function WorkoutExerciseItem({
           className="flex flex-row items-center gap-2 p-2 cursor-pointer hoverable rounded-md hover:bg-transparent"
           onClick={onClick}
         >
-          <img
-            src={preview || exercise?.gifUrl}
-            alt={exercise?.name}
-            className="w-12 h-12 rounded-full object-cover"
+          <ExerciseImage
+            gifUrl={exercise.gifUrl}
+            exerciseId={exercise.exerciseId}
           />
           <div className="flex flex-col">
             <h3 className="text-sm">
-              {exercise?.name
+              {exercise.name
                 .split(" ")
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(" ")}
@@ -97,7 +95,7 @@ export default function WorkoutExerciseItem({
           />
         </div>
       </div>
-      {workoutExercise.sets.length === 0 ? (
+      {workoutExercise.sets?.length === 0 ? (
         <div className="flex flex-col items-center text-sm text-neutral-400">
           No sets added yet.
         </div>
@@ -109,7 +107,7 @@ export default function WorkoutExerciseItem({
               <p className="">Weight</p>
               <p className="mr-7">Reps</p>
             </div>
-            {workoutExercise.sets.map((set) => (
+            {workoutExercise.sets?.map((set) => (
               <WorkoutExerciseSetItem
                 key={set.id}
                 workoutExerciseSet={set}
